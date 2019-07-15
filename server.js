@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 //mongoose 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/basic_mongoose');
+mongoose.connect('mongodb://localhost/task_crud');
 // create the express app
 var app = express();
 var bodyParser = require('body-parser');
@@ -21,10 +21,12 @@ app.use(session({
 const flash = require('express-flash');
 app.use(flash());
 // static content
-app.use(express.static(path.join(__dirname, "./static")));
-// setting up ejs and our views folder
-app.set('views', path.join(__dirname, './views'));
-app.set('view engine', 'ejs');
+app.use(express.static( __dirname + '/public/dist/public' ));
+
+// app.use(express.static(path.join(__dirname, "./static")));
+// // setting up ejs and our views folder
+// app.set('views', path.join(__dirname, './views'));
+// app.set('view engine', 'ejs');
 
 // // Get sockets
 // const server = app.listen(8000);
@@ -88,7 +90,7 @@ app.post('/tasks', (req, res)=> {
 })
 // PUT updated task by id 
 app.put('/tasks/:id', (req,res)=> {
-	Task.findByIdAndUpdate(req.params.id, req.body, (err, new_task_arr)=>{
+	Task.findOneAndUpdate({_id: req.params.id}, req.body,{new: true}, (err, new_task_arr)=>{
 		if (err) {
 			console.log("Error updating task by ID")
 			res.json({message: "Error", error: err})	

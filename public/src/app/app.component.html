@@ -1,0 +1,71 @@
+ <!--The content below is only a placeholder and can be replaced.-->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+ <div class="container border rounded text-center">
+   <h1>
+     Restful Tasks API! 
+   </h1>
+   <div class="container text-left border rounded">
+     <h5>New Task</h5>
+     <form (submit)="onSubmit()">
+        <!-- use the json pipe to see how newTask changes in real time -->
+        <p> {{ newTask | json }} </p>
+        <div class="form-group row">
+          <label for="title" class="col-sm-2 col-form-label">Title</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="title" name="newTask.title" [(ngModel)]="newTask.title" placeholder="Input title">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="newTask.description" [(ngModel)]="newTask.description" placeholder="Input description"placeholder="Input description">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark mb-2">Create</button>
+    </form>
+   </div>
+   <br>
+   <div class="container">
+     <div class="row">
+       <div class="col">
+         <h3>Tasks List</h3>
+         <div class="container border border-dark rounded mb-4 mt-2" *ngFor="let task of tasks">
+           <div class="row mt-2">
+             <div class="col">
+               <h5>Title: {{task.title}} </h5>
+               <p>Description {{task.description}}</p>          
+             </div>
+             <div class="col">
+               <button type="button" class="btn btn-info" (click)="showEditForm(task)">Edit</button>
+               <button type="button" class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="col" *ngIf="is_editedTask">
+         <h3>Edit Tasks</h3>
+         <form (submit)="editTask()">
+            <!-- use the json pipe to see how newTask changes in real time -->
+            <p> {{ editedTask | json }} </p>
+            <div class="form-group row">
+              <label for="title" class="col-sm-2 col-form-label">Title</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="editedTask.title" [(ngModel)]="editedTask.title" value="editedTask.title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="description" class="col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="editedTask.description" [(ngModel)]="editedTask.description" value="editedTask.description">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-dark mb-2">Edit</button>
+        </form>
+       </div>
+    </div>
+  </div>
+ </div>
+ 
+ 
+ 
+ 
